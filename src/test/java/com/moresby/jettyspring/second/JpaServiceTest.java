@@ -47,12 +47,16 @@ import com.moresby.jettyspring.first.FirstTest;
 import com.moresby.jettyspring.second.spring.SecondTestConfiguration;
 
 /**
+ * <p><strong>Test description:</strong> This class tests the application with the default database.
+ * In a normal project it's obviously not good therefore in the next test
+ * {@link JpaServiceTestDatabaseTest} we will replace it.</p>
+ *
  * <p>This test class starts a Jetty server and deploys the application.
  * The application connects to the "default" database. The default database
  * is a h2 database in the jettyspring.h2.db file.
  * The database is prepared, a "TestDBEntity" entity has been added to it.</p>
  * <p><strong>WARNING:</strong>Do not run the {@link #addTest()} test because it will add a
- * new line to the database and the {@link #listTest()} will fail. </p>
+ * new line to the database and the {@link #listTest()} will fail.</p>
  *
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012
@@ -79,6 +83,10 @@ public class JpaServiceTest {    /** Logger. */
 
     /**
      * Tests the {@link com.moresby.jettyspring.second.spring.SecondTestRestController#add(String) SecondTestRestController#add(String)} RESTful WS Service point.
+     *
+     * <p><strong>WARNING:</strong>This test is ignored
+     * because there is no guarantee order of the test running
+     * and the {@link #listTest()} needs the prepared database.</p>
      *
      * @throws IOException If communication error occurs
      */

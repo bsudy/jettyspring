@@ -35,16 +35,26 @@ import java.util.List;
 import com.moresby.jettyspring.second.domain.FirstEntity;
 
 /**
- * TODO javadoc.
+ * Data Access Object Interface, through the implementation of which
+ * the business logic can reach the persistence layer.<br>
+ * This DAO's responsibility to handle the {@link FirstEntity}
+ * database entity.<br>
  *
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012
  */
 public interface IFirstEntityDao {
 
-
+    /**
+     * Adds a new entity to persistence context.
+     * @param entity the new entity.
+     */
     void persist(FirstEntity entity);
 
+    /**
+     * Retrieves and returns all {@link FirstEntity} entities from the persistence context. (database)
+     * @return collection of the entities.
+     */
     List<FirstEntity> getAll();
 
 }

@@ -42,7 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.moresby.jettyspring.second.domain.FirstEntity;
 
 /**
- * TODO javadoc.
+ * @see IFirstEntityDao
  *
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012

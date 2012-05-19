@@ -30,20 +30,14 @@
  */
 package com.moresby.jettyspring.first.beans;
 
-import org.jboss.logging.Logger;
-import org.springframework.stereotype.Component;
-
 
 /**
- * TODO javadoc.
+ * A simple spring bean for the {@link com.moresby.jettyspring.first.FirstTest FirstTest}.
  *
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012
  */
-@Component
 public class FirstBean implements IFirstBean {
-
-    private static final Logger LOG = Logger.getLogger(FirstBean.class);
 
     /**
      * The test string.
@@ -52,7 +46,7 @@ public class FirstBean implements IFirstBean {
 
     /** {@inheritDoc} */
     @Override
-    public String testMethod() {
+    public final String testMethod() {
         return TEST_STRING;
     }
 
