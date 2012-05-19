@@ -30,6 +30,8 @@
  */
 package com.moresby.jettyspring.second.beans;
 
+import java.util.Collection;
+
 /**
  * TODO javadoc.
  *
@@ -42,5 +44,10 @@ public interface ISecondTestService {
      * @param name The name of the new entity.
      */
     void addNewEntity(String name);
+
+    /**
+     * @return Return all the entity names stored in the system.
+     */
+    Collection<String> listNames();
 
 }

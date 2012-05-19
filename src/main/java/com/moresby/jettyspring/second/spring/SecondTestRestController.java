@@ -30,6 +30,8 @@
  */
 package com.moresby.jettyspring.second.spring;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,5 +62,15 @@ public class SecondTestRestController {
     public @ResponseBody String add(final @RequestParam String name) {
         service.addNewEntity(name);
         return "Done!";
+    }
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public @ResponseBody String list() {
+        final Collection<String> names = service.listNames();
+        final StringBuffer sb = new StringBuffer();
+        for (final String name : names) {
+            sb.append(name);
+        }
+        return sb.toString();
     }
 }

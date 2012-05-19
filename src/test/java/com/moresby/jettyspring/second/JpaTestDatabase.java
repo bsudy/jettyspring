@@ -32,33 +32,52 @@ package com.moresby.jettyspring.second;
 
 import java.io.IOException;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import junit.framework.Assert;
 
 import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mortbay.jetty.Server;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.moresby.jettyspring.JettyRunner;
 import com.moresby.jettyspring.RestTestUtil;
 import com.moresby.jettyspring.first.FirstTest;
 import com.moresby.jettyspring.second.spring.SecondTestConfiguration;
+import com.moresby.jettyspring.second.spring.SecondTestRestController;
 
 /**
- * <p>This test class starts a Jetty server and deploys the application.
- * The application connects to the "default" database. The default database
- * is a h2 database in the jettyspring.h2.db file.
- * The database is prepared, a "TestDBEntity" entity has been added to it.</p>
- * <p><strong>WARNING:</strong>Do not run the {@link #addTest()} test because it will add a
- * new line to the database and the {@link #listTest()} will fail. </p>
+ * TODO javadoc.
  *
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012
  */
-public class JpaServiceTest {    /** Logger. */
+public class JpaTestDatabase {
+
+    /** Logger. */
     private static final Logger LOG = Logger.getLogger(FirstTest.class);
+
+
+    @Configuration
+    @EnableWebMvc
+    @ComponentScan(basePackageClasses = SecondTestRestController.class, basePackages = {"com.moresby.jettyspring.second.beans", "com.moresby.jettyspring.second.dal" })
+    @EnableTransactionManagement
+    public static class TestConfiguration extends SecondTestConfiguration {
+
+        /** {@inheritDoc} */
+        @Override
+        public EntityManagerFactory entityManagerFactory() {
+            return Persistence.createEntityManagerFactory("test");
+        }
+
+    }
 
     private static Server jettyServer = null;
 
@@ -68,7 +87,7 @@ public class JpaServiceTest {    /** Logger. */
      */
     @BeforeClass
     public static void startJetty() throws Exception {
-        jettyServer = JettyRunner.startJetty(SecondTestConfiguration.class);
+        jettyServer = JettyRunner.startJetty(TestConfiguration.class);
     }
 
     /** @see AfterClass */
@@ -77,28 +96,12 @@ public class JpaServiceTest {    /** Logger. */
         JettyRunner.stopJetty(jettyServer);
     }
 
-    /**
-     * Tests the {@link com.moresby.jettyspring.second.spring.SecondTestRestController#add(String) SecondTestRestController#add(String)} RESTful WS Service point.
-     *
-     * @throws IOException If communication error occurs
-     */
-    @Test
-    @Ignore
-    public final void addTest() throws IOException {
-        final String result = RestTestUtil.doGet("/add?name=testEntity");
-
-        LOG.info("Result:   " + result);
-        LOG.info("Expected: " + "Done!");
-        Assert.assertTrue("Done!".equals(result));
-
-    }
-
     @Test
     public final void listTest() throws IOException {
         final String result = RestTestUtil.doGet("/list");
 
         LOG.info("Result:   " + result);
-        Assert.assertTrue(result.equals("TestDBEntity"));
+        Assert.assertTrue(result.isEmpty());
     }
 
 }

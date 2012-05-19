@@ -30,6 +30,10 @@
  */
 package com.moresby.jettyspring.second.beans;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,6 +68,18 @@ public class SecondTestService implements ISecondTestService {
     @Override
     public void addNewEntity(final String name) {
         firstEntityDao.persist(new FirstEntity(name));
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Collection<String> listNames() {
+        final List<FirstEntity> entities = firstEntityDao.getAll();
+        final List<String> names = new ArrayList<String>(entities.size());
+        for (final FirstEntity entity : entities) {
+            names.add(entity.getName());
+        }
+
+        return names;
     }
 
 }
