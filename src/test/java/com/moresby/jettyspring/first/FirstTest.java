@@ -28,15 +28,23 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-package com.moresby.jettyspring.spring;
+package com.moresby.jettyspring.first;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import java.io.IOException;
 
-import com.moresby.jettyspring.beans.IFirstBean;
+import junit.framework.Assert;
+
+import org.apache.log4j.Logger;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.mortbay.jetty.Server;
+
+import com.moresby.jettyspring.JettyRunner;
+import com.moresby.jettyspring.RestTestUtil;
+import com.moresby.jettyspring.first.beans.FirstBean;
+import com.moresby.jettyspring.first.spring.FirstTestConfiguration;
+import com.moresby.jettyspring.second.spring.SecondTestRestController;
 
 /**
  * TODO javadoc.
@@ -44,19 +52,42 @@ import com.moresby.jettyspring.beans.IFirstBean;
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012
  */
-@Controller
-public class RestController {
+public class FirstTest {
 
-    private final IFirstBean firstBean;
+    /** Logger. */
+    private static final Logger LOG = Logger.getLogger(FirstTest.class);
 
-    @Autowired
-    public RestController(final IFirstBean firstBean) {
-        super();
-        this.firstBean = firstBean;
+    private static Server jettyServer = null;
+
+    /**
+     * @see BeforeClass
+     * @throws Exception If error occurs during the jetty start or application deployment.
+     */
+    @BeforeClass
+    public static void startJetty() throws Exception {
+        jettyServer = JettyRunner.startJetty(FirstTestConfiguration.class);
     }
 
-    @RequestMapping(value = "firstBeanTest", method = RequestMethod.GET)
-    public @ResponseBody String firstBeanTest() {
-        return firstBean.testMethod();
+    /** @see AfterClass */
+    @AfterClass
+    public static void stopJetty() {
+        JettyRunner.stopJetty(jettyServer);
     }
+
+    /**
+     * Tests the {@link SecondTestRestController#add(String)} RESTful WS Service point.
+     *
+     * @throws IOException If communication error occurs
+     */
+    @Test
+    public void testFirstBean() throws IOException {
+        final String result = RestTestUtil.doGet("/firstBeanTest");
+
+        LOG.info("Result:   " + result);
+        LOG.info("Expected: " + FirstBean.TEST_STRING);
+        Assert.assertTrue(FirstBean.TEST_STRING.equals(result));
+
+    }
+
+
 }

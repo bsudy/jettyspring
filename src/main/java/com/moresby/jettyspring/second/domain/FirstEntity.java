@@ -28,7 +28,11 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-package com.moresby.jettyspring.beans;
+package com.moresby.jettyspring.second.domain;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * TODO javadoc.
@@ -36,17 +40,44 @@ package com.moresby.jettyspring.beans;
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012
  */
-public class FirstBean implements IFirstBean {
+@Entity
+public class FirstEntity {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private String name;
+
+    /** Default constructor for hibernate. */
+    FirstEntity() { /* NOP */ }
 
     /**
-     *
+     * @param name The name of the firstEntity. :)
      */
-    public static final String TEST_STRING = "FirstBean#testMethod()";
-
-    /** {@inheritDoc} */
-    @Override
-    public String testMethod() {
-        return TEST_STRING;
+    public FirstEntity(final String name) {
+        super();
+        this.name = name;
     }
+
+
+
+    public Long getId() {
+        return id;
+    }
+
+    void setId(final Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+
 
 }

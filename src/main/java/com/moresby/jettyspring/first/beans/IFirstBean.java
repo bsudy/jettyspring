@@ -28,7 +28,7 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-package com.moresby.jettyspring.beans;
+package com.moresby.jettyspring.first.beans;
 
 /**
  * TODO javadoc.

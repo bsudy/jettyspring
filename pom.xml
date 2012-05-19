@@ -75,6 +75,15 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
+		<!-- Object-to-Relation-Mapping (ORM) integration with Hibernate, JPA, 
+			and iBatis. (depends on spring-core, spring-beans, spring-context, spring-tx) 
+			Define this if you need ORM (org.springframework.orm.*) -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+
 		<!-- Transaction Management Abstraction (depends on spring-core, spring-beans, 
 			spring-aop, spring-context) Define this if you use Spring Transactions or 
 			DAO Exception Hierarchy (org.springframework.transaction.*/org.springframework.dao.*) -->
@@ -92,13 +101,13 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
 			<version>2.2.2</version>
 		</dependency>
-		
+
 		<!-- DATABASE ACCESS -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -181,7 +190,7 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- JETTY END -->
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

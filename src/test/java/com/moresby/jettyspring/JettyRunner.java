@@ -138,7 +138,7 @@ public final class JettyRunner {
      * @param port The port number. (NonNull)
      * @throws Exception If Jetty server start or deploy fails.
      */
-    public static void startJetty(final String servletContextXml, final String rootContextXml, final String contextPath, final int port) throws Exception {
+    public static Server startJetty(final String servletContextXml, final String rootContextXml, final String contextPath, final int port) throws Exception {
         Server jettyServer = null;
         try {
             jettyServer = new Server();
@@ -163,6 +163,7 @@ public final class JettyRunner {
             jettyServer.setHandler(context);
             jettyServer.start();
             LOG.info("Started: " + jettyServer.isStarted());
+            return jettyServer;
         } catch (final Exception ex) {
             stopJetty(jettyServer);
             throw ex;
@@ -179,7 +180,7 @@ public final class JettyRunner {
      * @param port The port number. (NonNull)
      * @throws Exception If Jetty server start or deploy fails.
      */
-    public static void startJetty(final String webDirPath, final String contextPath, final int port) throws Exception {
+    public static Server startJetty(final String webDirPath, final String contextPath, final int port) throws Exception {
         Server jettyServer = null;
         try {
             jettyServer = new Server();
@@ -196,6 +197,7 @@ public final class JettyRunner {
 
             jettyServer.start();
             LOG.info("Started: " + jettyServer.isStarted());
+            return jettyServer;
         } catch (final Exception ex) {
             stopJetty(jettyServer);
             throw ex;
@@ -211,6 +213,7 @@ public final class JettyRunner {
         if (jettyServer != null) {
             try {
                 jettyServer.stop();
+                LOG.info("Jetty stopped");
             } catch (final Exception e1) {
                 LOG.info("Exception occurred during stopping jetty.", e1);
             }

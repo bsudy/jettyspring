@@ -28,15 +28,18 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-package com.moresby.jettyspring.spring;
+package com.moresby.jettyspring.second.dal;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import java.util.List;
 
-import com.moresby.jettyspring.beans.FirstBean;
-import com.moresby.jettyspring.beans.IFirstBean;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.moresby.jettyspring.second.domain.FirstEntity;
 
 /**
  * TODO javadoc.
@@ -44,14 +47,24 @@ import com.moresby.jettyspring.beans.IFirstBean;
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012
  */
-@Configuration
-@EnableWebMvc
-@ComponentScan(basePackageClasses = RestController.class)
-public class JettySpringConfiguration {
+@Component
+@Transactional
+public class FirstEntityDao implements IFirstEntityDao {
 
-    @Bean
-    public IFirstBean firstBean() {
-        return new FirstBean();
+    @PersistenceContext
+    EntityManager entityManager;
+
+    @Override
+    public void persist(final FirstEntity entity) {
+        entityManager.persist(entity);
+    }
+
+    @Override
+    public List<FirstEntity> getAll() {
+        final Query query = entityManager.createQuery("from FirstEntity");
+        final List<FirstEntity> result = query.getResultList();
+        return result;
+
     }
 
 }
