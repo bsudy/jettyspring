@@ -49,12 +49,20 @@ public class FirstTestRestController {
 
     private final IFirstBean firstBean;
 
+    /**
+     * @param firstBean The "business logic" of the {@link com.moresby.jettyspring.first.FirstTest FirstTest}
+     */
     @Autowired
     public FirstTestRestController(final IFirstBean firstBean) {
         super();
         this.firstBean = firstBean;
     }
 
+    /**
+     * RESTful WS service point to test the Jetty/Spring integration.
+     *
+     * @return A constant string. :)
+     */
     @RequestMapping(value = "firstBeanTest", method = RequestMethod.GET)
     public @ResponseBody String firstBeanTest() {
         return firstBean.testMethod();

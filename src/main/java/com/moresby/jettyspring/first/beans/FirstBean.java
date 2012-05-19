@@ -30,9 +30,9 @@
  */
 package com.moresby.jettyspring.first.beans;
 
-
 /**
- * A simple spring bean for the {@link com.moresby.jettyspring.first.FirstTest FirstTest}.
+ * Implementation of {@link IFirstBean}.
+ * @see IFirstBean
  *
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012

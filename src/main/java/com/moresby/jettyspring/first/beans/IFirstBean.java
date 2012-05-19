@@ -31,13 +31,16 @@
 package com.moresby.jettyspring.first.beans;
 
 /**
- * TODO javadoc.
+ * Very simple "business logic" interface to test the Jetty/Spring integration. ({@link com.moresby.jettyspring.first.FirstTest FirstTest}.)
  *
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012
  */
 public interface IFirstBean {
 
+    /**
+     * @return A constant string. :)
+     */
     String testMethod();
 
 }

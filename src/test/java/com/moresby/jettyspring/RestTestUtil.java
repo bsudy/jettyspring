@@ -41,40 +41,107 @@ import java.net.URL;
 import org.junit.Assert;
 
 /**
- * TODO javadoc.
+ * Utility class consisting of helper methods to test RESTful
+ * web services.<br>
+ * The class provides a couple of utility methods to create
+ * HTTP requests, checks the response code and returns the
+ * content.<br>
+ * This class uses the {@link JettyRunner}'s constants as default values.
  *
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012
  */
 public final class RestTestUtil {
 
+    /** The timeout after the request fails. */
+    private static final int TIMEOUT = 10000;
 
+    /**
+     * Sends a <tt>GET</tt> request to service accessed on <tt>requestPath</tt>.<br>
+     * The context path is set from the {@link JettyRunner#DEFAULT_PATH}.<br>
+     * The port number is also picked up from {@link JettyRunner#DEFAULT_PORT_NUMBER}.<br>
+     *
+     * @param requestPath The service path. (NonNull)
+     * @return The response body. (NonNull)
+     * @throws IOException If communication error occurs.
+     * @throws AssertionError If the request fails.
+     */
     public static String doGet(final String requestPath) throws IOException {
         return doGet(requestPath, HttpURLConnection.HTTP_OK);
     }
 
-    public static String doGet(final String requestPath, final int expectedResponseCode) throws IOException {
+    /**
+     * Sends a <tt>GET</tt> request to service accessed on <tt>requestPath</tt>.<br>
+     * The context path is set from the {@link JettyRunner#DEFAULT_PATH}.<br>
+     * The port number is also picked up from {@link JettyRunner#DEFAULT_PORT_NUMBER}.<br>
+     *
+     * @param requestPath The service path. (NonNull)
+     * @param expectedResponseCode The expected response code. (NonNull)
+     * @return The response body. (NonNull)
+     * @throws IOException If communication error occurs.
+     * @throws AssertionError If the response code is not match to the expcetedResponseCode.
+     */
+    public static String doGet(final String requestPath, final int expectedResponseCode) throws IOException  {
         return doRequest(JettyRunner.DEFAULT_PORT_NUMBER, JettyRunner.DEFAULT_PATH, requestPath, "GET", null, expectedResponseCode);
     }
 
+    /**
+     * Sends a <tt>POST</tt> request to service accessed on <tt>requestPath</tt> using the output
+     * as the body content.<br>
+     * The context path is set from the {@link JettyRunner#DEFAULT_PATH}.<br>
+     * The port number is also picked up from {@link JettyRunner#DEFAULT_PORT_NUMBER}.<br>
+     *
+     * @param requestPath The service path. (NonNull)
+     * @param output The request body content. (Nullable)
+     * @return The response body. (NonNull)
+     * @throws IOException If communication error occurs.
+     * @throws AssertionError If the request fails.
+     */
     public static String doPost(final String requestPath, final String output) throws IOException {
         return doPost(requestPath, output, HttpURLConnection.HTTP_OK);
     }
 
+    /**
+     * Sends a <tt>POST</tt> request to service accessed on <tt>requestPath</tt> using the output
+     * as the body content.<br>
+     * The context path is set from the {@link JettyRunner#DEFAULT_PATH}.<br>
+     * The port number is also picked up from {@link JettyRunner#DEFAULT_PORT_NUMBER}.<br>
+     *
+     * @param requestPath The service path. (NonNull)
+     * @param output The request body content. (Nullable)
+     * @param expectedResponseCode The expected response code. (NonNull)
+     * @return The response body. (NonNull)
+     * @throws IOException If communication error occurs.
+     * @throws AssertionError If the response code is not match to the expcetedResponseCode.
+     */
     public static String doPost(final String requestPath, final String output, final int expectedResponseCode) throws IOException {
         return doRequest(JettyRunner.DEFAULT_PORT_NUMBER, JettyRunner.DEFAULT_PATH, requestPath, "POST", output, expectedResponseCode);
     }
 
 
-    private static String doRequest(final int port, final String contextPath, final String requestPath, final String method, final String output, final int expectedResponseCode) throws IOException {
+    /**
+     * Sends a request to service accessed on <tt>requestPath</tt> using the output
+     * as the body content.<br>
+     *
+     * @param port The port number. (NonNull)
+     * @param contextPath The context path. (NonNull)
+     * @param requestPath The service path. (NonNull)
+     * @param method The method. (NonNull)
+     * @param output The request body content. (Nullable)
+     * @param expectedResponseCode The expected response code. (NonNull)
+     * @return The response body. (NonNull)
+     * @throws IOException If communication error occurs.
+     * @throws AssertionError If the response code is not match to the expcetedResponseCode.
+     */
+    public static String doRequest(final int port, final String contextPath, final String requestPath, final String method, final String output, final int expectedResponseCode) throws IOException {
 
         final URL serverAddress = new URL("http://localhost:" + port + contextPath + requestPath);
 
-        final HttpURLConnection connection = (HttpURLConnection)serverAddress.openConnection();
+        final HttpURLConnection connection = (HttpURLConnection) serverAddress.openConnection();
         connection.setRequestMethod(method);
         connection.setDoInput(true);
         connection.setDoOutput(true);
-        connection.setReadTimeout(10000);
+        connection.setReadTimeout(TIMEOUT);
 
         connection.connect();
 
@@ -96,9 +163,9 @@ public final class RestTestUtil {
             int read = 0;
             final int bufSize = 1024;
             final byte[] buffer = new byte[bufSize];
-            while(true){
+            while (true) {
                  read = bis.read(buffer);
-                 if(read==-1){
+                 if (read == -1) {
                       break;
                  }
                  baf.write(buffer, 0, read);

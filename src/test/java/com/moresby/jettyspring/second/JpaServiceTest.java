@@ -61,12 +61,19 @@ import com.moresby.jettyspring.second.spring.SecondTestConfiguration;
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012
  */
-public class JpaServiceTest {    /** Logger. */
+public class JpaServiceTest {
+
+    /** Logger. */
     private static final Logger LOG = Logger.getLogger(FirstTest.class);
 
+    /** The static variable for the Jetty server. */
     private static Server jettyServer = null;
 
     /**
+     * Starts the Jetty and deploys the application.<br>
+     * <strong>WARNING:</strong> All the tests will use the same Jetty and application so
+     * the test should not modify the state of the application.<br>
+     *
      * @see BeforeClass
      * @throws Exception If error occurs during the jetty start or application deployment.
      */
@@ -75,7 +82,11 @@ public class JpaServiceTest {    /** Logger. */
         jettyServer = JettyRunner.startJetty(SecondTestConfiguration.class);
     }
 
-    /** @see AfterClass */
+    /**
+     * Stops the Jetty server.
+     *
+     * @see AfterClass
+     */
     @AfterClass
     public static void stopJetty() {
         JettyRunner.stopJetty(jettyServer);
@@ -101,6 +112,11 @@ public class JpaServiceTest {    /** Logger. */
 
     }
 
+    /**
+     * Tests the {@link com.moresby.jettyspring.second.spring.SecondTestRestController#list() SecondTestRestController#list()} RESTful WS Service point.
+     *
+     * @throws IOException If communication error occurs
+     */
     @Test
     public final void listTest() throws IOException {
         final String result = RestTestUtil.doGet("/list");

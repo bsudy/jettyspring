@@ -51,14 +51,19 @@ import com.moresby.jettyspring.second.domain.FirstEntity;
 @Transactional
 public class FirstEntityDao implements IFirstEntityDao {
 
+    /**
+     * EntityManager through what the persistence context can be manipulated.
+     */
     @PersistenceContext
     EntityManager entityManager;
 
+    /** {@inheritDoc} */
     @Override
     public void persist(final FirstEntity entity) {
         entityManager.persist(entity);
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<FirstEntity> getAll() {
         final Query query = entityManager.createQuery("from FirstEntity");

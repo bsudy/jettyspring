@@ -52,18 +52,34 @@ public class SecondTestRestController {
 
     private final ISecondTestService service;
 
+    /**
+     * @param service The business logic for the second test.
+     */
     @Autowired
     public SecondTestRestController(final ISecondTestService service) {
         super();
         this.service = service;
     }
 
+    /**
+     * RESTful WS service point using which a new entity can be added to
+     * the persistence context.
+     *
+     * @param name The name of the new entity.
+     * @return <code>Done!</code> string.
+     */
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public @ResponseBody String add(final @RequestParam String name) {
         service.addNewEntity(name);
         return "Done!";
     }
 
+    /**
+     * RESTful WS service point using which all entities can be
+     * listed from the persistence context.
+     *
+     * @return The concatenated entity names.
+     */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public @ResponseBody String list() {
         final Collection<String> names = service.listNames();

@@ -39,7 +39,7 @@ import com.moresby.jettyspring.first.beans.FirstBean;
 import com.moresby.jettyspring.first.beans.IFirstBean;
 
 /**
- * In the first test I'm defineing one bean
+ * In the first test I'm defining one bean.
  *
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012
@@ -49,6 +49,9 @@ import com.moresby.jettyspring.first.beans.IFirstBean;
 @ComponentScan(basePackageClasses = FirstTestRestController.class)
 public class FirstTestConfiguration {
 
+    /**
+     * @return IFirstBean
+     */
     @Bean
     public IFirstBean firstBean() {
         return new FirstBean();

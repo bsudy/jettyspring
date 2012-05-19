@@ -40,11 +40,18 @@ import org.mortbay.jetty.bio.SocketConnector;
 import org.mortbay.jetty.servlet.Context;
 import org.mortbay.jetty.servlet.ServletHolder;
 import org.mortbay.jetty.webapp.WebAppContext;
-import org.springframework.context.annotation.Configuration;
 
 /**
- * Utility class to start and stop embedded Jetty server.<br />
- * <a href="http://jetty.codehaus.org/jetty/">http://jetty.codehaus.org/jetty/</a>
+ * Utility class to start and stop embedded Jetty server.<br>
+ * <a href="http://jetty.codehaus.org/jetty/">http://jetty.codehaus.org/jetty/</a>.<br>
+ * <br>
+ * The class provides three way to start a Jetty server and deploy a (Spring MVC) application.
+ * <ul>
+ * <li>Annotation driven deployment using {@link org.springframework.context.annotation.Configuration Configuration} class
+ *     ({@link org.springframework.web.context.support.AnnotationConfigWebApplicationContext AnnotationConfigWebApplicationContext})</li>
+ * <li>Classic xml based using servlet-context and root-context xml-s.</li>
+ * <li>Generic using Web resource directory with web.xml.</li>
+ * </ul>
  *
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012
@@ -69,7 +76,7 @@ public final class JettyRunner {
      * directory what you want to use.
      * </p>
      *
-     * @param configuration The spring {@link Configuration configuration} class.
+     * @param configuration The spring {@link org.springframework.context.annotation.Configuration configuration} class.
      * @return The started Jetty server. (NonNull)
      * @throws Exception If Jetty server start or deploy fails.
      */
@@ -136,6 +143,7 @@ public final class JettyRunner {
      * @param rootContextXml The root application context spring xml. (NonNull)
      * @param contextPath The context path where the application will run. (NonNull)
      * @param port The port number. (NonNull)
+     * @return The Jetty server. (NonNull)
      * @throws Exception If Jetty server start or deploy fails.
      */
     public static Server startJetty(final String servletContextXml, final String rootContextXml, final String contextPath, final int port) throws Exception {
@@ -173,11 +181,12 @@ public final class JettyRunner {
     /**
      * Starts a Jetty server and deploys the web application defined
      * in the given web resource directory.<br>
-     * The <tt>WEB-INF/web.xml</tt> will be process during the deploment.
+     * The <tt>WEB-INF/web.xml</tt> will be process during the deployment.
      *
      * @param webDirPath The web resource directory. (NonNull)
      * @param contextPath The context path where the application will run. (NonNull)
      * @param port The port number. (NonNull)
+     * @return The Jetty server. (NonNull)
      * @throws Exception If Jetty server start or deploy fails.
      */
     public static Server startJetty(final String webDirPath, final String contextPath, final int port) throws Exception {

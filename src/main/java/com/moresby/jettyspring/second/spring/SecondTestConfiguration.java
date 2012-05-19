@@ -53,16 +53,25 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableTransactionManagement
 public class SecondTestConfiguration {
 
+    /**
+     * @return an entityManager factory to reach the persistence context.
+     */
     @Bean
     public EntityManagerFactory entityManagerFactory() {
         return Persistence.createEntityManagerFactory("default");
     }
 
+    /**
+     * @return transaction manager which will manage the transactions using annotations.
+     */
     @Bean
     public PlatformTransactionManager transactionManager() {
         return new JpaTransactionManager(entityManagerFactory());
     }
 
+    /**
+     * @return necessary bean which will configure the persistence context on all {@link javax.persistence.PersistenceContext} annotation.
+     */
     @Bean
     public org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor persistenceAnnotationBeanPostProcessor() {
         return new org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor();

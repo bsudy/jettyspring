@@ -44,10 +44,14 @@ import com.moresby.jettyspring.JettyRunner;
 import com.moresby.jettyspring.RestTestUtil;
 import com.moresby.jettyspring.first.beans.FirstBean;
 import com.moresby.jettyspring.first.spring.FirstTestConfiguration;
-import com.moresby.jettyspring.second.spring.SecondTestRestController;
 
 /**
- * TODO javadoc.
+ * <p><strong>Test description:</strong> This test shows how an Spring MVC
+ * application can be deployed into Jetty.</p>
+ *
+ * <p>The test deploys the Spring MVC application using the {@link FirstTestConfiguration}.
+ * The Jetty start and deploy process is implemented in the {@link JettyRunner} because is
+ * a common functionality what can be shared between tests.</p>
  *
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012
@@ -57,9 +61,14 @@ public class FirstTest {
     /** Logger. */
     private static final Logger LOG = Logger.getLogger(FirstTest.class);
 
+    /** The static variable for the Jetty server. */
     private static Server jettyServer = null;
 
     /**
+     * Starts the Jetty and deploys the application.<br>
+     * <strong>WARNING:</strong> All the tests will use the same Jetty and application so
+     * the test should not modify the state of the application.<br>
+     *
      * @see BeforeClass
      * @throws Exception If error occurs during the jetty start or application deployment.
      */
@@ -68,14 +77,18 @@ public class FirstTest {
         jettyServer = JettyRunner.startJetty(FirstTestConfiguration.class);
     }
 
-    /** @see AfterClass */
+    /**
+     * Stops the Jetty server.
+     *
+     * @see AfterClass
+     */
     @AfterClass
     public static void stopJetty() {
         JettyRunner.stopJetty(jettyServer);
     }
 
     /**
-     * Tests the {@link SecondTestRestController#add(String)} RESTful WS Service point.
+     * Tests the {@link com.moresby.jettyspring.second.spring.SecondTestRestController#add(String) SecondTestRestController#add(String)} RESTful WS Service point.
      *
      * @throws IOException If communication error occurs
      */
