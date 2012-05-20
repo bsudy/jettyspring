@@ -39,7 +39,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.moresby.jettyspring.first.beans.IFirstBean;
 
 /**
- * TODO javadoc.
+ * Spring MVC controller for the {@link com.moresby.jettyspring.first.FirstTest FirstTest}.
  *
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012

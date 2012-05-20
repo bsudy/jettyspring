@@ -78,7 +78,7 @@ public class SecondTestRestController {
      * RESTful WS service point using which all entities can be
      * listed from the persistence context.
      *
-     * @return The concatenated entity names.
+     * @return The concatenated entity names. (NonNull)
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public @ResponseBody String list() {
