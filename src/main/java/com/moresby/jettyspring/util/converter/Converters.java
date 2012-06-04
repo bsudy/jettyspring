@@ -30,11 +30,14 @@
  */
 package com.moresby.jettyspring.util.converter;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
- * TODO javadoc.
+ * This utility class contains a couple of predefined {@link Converter}s and
+ * a couple of method to help the conversion.
  *
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012
@@ -42,9 +45,51 @@ import java.util.Collection;
 public final class Converters {
 
 
+    /**
+     * Trims a string using {@link String#trim()} method.
+     */
+    public static final Converter<String, String> TRIM = new Converter<String, String>() {
+
+        @Override
+        public String convert(final String from) throws ConverterException {
+            if (from == null) {
+                return null;
+            }
+            return from.trim();
+        }
+
+    };
+
+    /**
+     * Converts an array of object by the converter.
+     *
+     * @param <F> The type of the object which will be converted.
+     * @param <T> The type of the object which will be converted to.
+     * @param from The array of object to convert.
+     * @param converter The converter which converts all the array elements
+     * @return The new array.
+     */
+    public static <F, T> T[] convertArray(final F[] from, final Converter<F, T> converter, final Class<T> clazz) {
+        if (from == null) {
+            return null;
+        }
+        final List<T> result = new ArrayList<T>(from.length);
+        for (int i = 0; i < from.length; i++) {
+            result.add(converter.convert(from[i]));
+        }
+
+        Array.newInstance(clazz, from.length);
+        @SuppressWarnings("unchecked")
+        final T[] resultArray = result.toArray((T[]) Array.newInstance(clazz, from.length) );
+        return resultArray;
+
+    }
+
 
     /**
      * Converts a list of objects. The result will be in an ArrayList.
+     *
+     * TODO create ConvertList object and use that!
      *
      * @param <F> The type of the object which will be converted.
      * @param <T> The type of the object which will be converted to.

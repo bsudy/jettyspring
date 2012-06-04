@@ -31,12 +31,20 @@
 package com.moresby.jettyspring.util.converter;
 
 /**
- * TODO javadoc.
+ * Interface the implementations of which convertes an object to an other.
+ *
+ * @param <F> The type of the object which will be converted.
+ * @param <T> The type of the object which will be converted to.
  *
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012
  */
 public interface Converter<F, T> {
 
+    /**
+     * @param from The object which will be converter.
+     * @return The result.
+     * @throws ConverterException If error occurs during the conversion.
+     */
     T convert(F from) throws ConverterException;
 }

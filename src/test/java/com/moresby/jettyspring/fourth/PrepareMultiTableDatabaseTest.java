@@ -61,12 +61,15 @@ import com.moresby.jettyspring.fourth.spring.FourthTestRestController;
 
 /**
  * TODO javadoc.
+ * As you can see the database configuration is not so easy. It requires a lot of code and it is
+ * difficult to maintain. Therefore in the next test I will show how the database configuration
+ * can be simpler.
+ *
  *
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012
  */
 public class PrepareMultiTableDatabaseTest {
-
 
     /** Logger. */
     private static final Logger LOG = Logger.getLogger(PrepareMultiTableDatabaseTest.class);
