@@ -56,9 +56,9 @@ public class Station {
     /** The name of the station. (NonNull) */
     private String name;
 
-    /** The settlement where the station lays. (NonNull) */
+    /** The zone where the station lays. (NonNull) */
     @ManyToOne
-    private Settlement settlement;
+    private Zone zone;
 
     /** The lines the station is on. */
     @ManyToMany
@@ -69,12 +69,12 @@ public class Station {
 
     /**
      * @param name The name of the station. (NonNull)
-     * @param settlement The settlement where the station lays. (NonNull)
+     * @param zone The zone where the station lays. (NonNull)
      */
-    public Station(final String name, final Settlement settlement) {
+    public Station(final String name, final Zone zone) {
         super();
         this.name = name;
-        this.settlement = settlement;
+        this.zone = zone;
     }
 
 
@@ -108,17 +108,17 @@ public class Station {
     }
 
     /**
-     * @return the settlement
+     * @return The zone where the station lays. (NonNull)
      */
-    public Settlement getSettlement() {
-        return settlement;
+    public Zone getZone() {
+        return zone;
     }
 
     /**
-     * @param settlement the settlement to set
+     * @param zone The zone where the station lays to set. (NonNull)
      */
-    public void setSettlement(final Settlement settlement) {
-        this.settlement = settlement;
+    public void setZone(final Zone zone) {
+        this.zone = zone;
     }
 
     /**

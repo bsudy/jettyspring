@@ -39,35 +39,35 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 /**
- * Database entity to represent a Settlement.
+ * Database entity to represent a Zone.
  *
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012
  */
 @Entity
-public class Settlement {
+public class Zone {
 
     /** Unique identifier. <tt>null</tt> until it's persisted. */
     @Id
     @GeneratedValue
     private Long id;
 
-    /** The name of the settlement. (NonNull) */
-    private String name;
+    /** The number of the zone. (NonNull) */
+    private Integer number;
 
-    /** The list of the stations of the settlement. (NonNull) */
-    @OneToMany(mappedBy = "settlement")
+    /** The list of the stations of the zone. (NonNull) */
+    @OneToMany(mappedBy = "zone")
     private List<Station> stations = new ArrayList<Station>();
 
     /** Default constructor for hibernate. */
-    Settlement() { /* NOP */ }
+    Zone() { /* NOP */ }
 
     /**
-     * @param name The name of the settlement. (NonNull)
+     * @param number The number of the zone. (NonNull)
      */
-    public Settlement(final String name) {
+    public Zone(final Integer number) {
         super();
-        this.name = name;
+        this.number = number;
     }
 
     /**
@@ -85,17 +85,17 @@ public class Settlement {
     }
 
     /**
-     * @return The name of the settlement. (NonNull)
+     * @return The number of the Zone. (NonNull)
      */
-    public String getName() {
-        return name;
+    public Integer getNumber() {
+        return number;
     }
 
     /**
-     * @param name The name of the settlement to set. (NonNull)
+     * @param name The number of the Zone to set. (NonNull)
      */
-    public void setName(final String name) {
-        this.name = name;
+    public void setNumber(final Integer number) {
+        this.number = number;
     }
 
     /**

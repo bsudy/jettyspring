@@ -30,6 +30,8 @@
  */
 package com.moresby.jettyspring.fourth;
 
+import static org.hamcrest.Matchers.*;
+
 import java.io.IOException;
 
 import javax.persistence.EntityManager;
@@ -37,7 +39,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 import org.apache.log4j.Logger;
-import org.hamcrest.Matchers;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -52,8 +53,9 @@ import com.jayway.jsonassert.JsonAssert;
 import com.moresby.jettyspring.EntityManagerFactoryUtil;
 import com.moresby.jettyspring.JettyRunner;
 import com.moresby.jettyspring.RestTestUtil;
-import com.moresby.jettyspring.fourth.domain.Settlement;
+import com.moresby.jettyspring.fourth.domain.Line;
 import com.moresby.jettyspring.fourth.domain.Station;
+import com.moresby.jettyspring.fourth.domain.Zone;
 import com.moresby.jettyspring.fourth.spring.FourthTestConfiguration;
 import com.moresby.jettyspring.fourth.spring.FourthTestRestController;
 
@@ -115,14 +117,29 @@ public class PrepareMultiTableDatabaseTest {
         final EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        /* Generate London */
-        final Settlement london = new Settlement("London");
-        entityManager.persist(london);
+        /* Generate Zones */
+        final Zone zone1 = new Zone(Integer.valueOf(1));
+        entityManager.persist(zone1);
+
+        final Zone zone2 = new Zone(Integer.valueOf(2));
+        entityManager.persist(zone2);
+
+        /* Generate Lines */
+        final Line jubilee = new Line("Jubilee");
+        entityManager.persist(jubilee);
+
+        final Line northern = new Line("Northern");
+        entityManager.persist(northern);
 
         /* Generate London Bridge station. */
-        final Station londonBridge = new Station("London Bridge", london);
+        final Station londonBridge = new Station("London Bridge", zone1);
+        londonBridge.getLines().add(jubilee);
+        londonBridge.getLines().add(northern);
         entityManager.persist(londonBridge);
-        london.getStations().add(londonBridge);
+
+        zone1.getStations().add(londonBridge);
+        jubilee.getStations().add(londonBridge);
+        northern.getStations().add(londonBridge);
 
         transaction.commit();
 
@@ -154,7 +171,7 @@ public class PrepareMultiTableDatabaseTest {
 
         LOG.info("Result:   " + result);
 
-        JsonAssert.with(result).assertThat("$..name", Matchers.hasItems("London Bridge"));
+        JsonAssert.with(result).assertThat("$..name", hasItems("London Bridge"));
     }
 
 }
