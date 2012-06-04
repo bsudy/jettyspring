@@ -131,6 +131,9 @@ public class PrepareMultiTableDatabaseTest {
         final Line northern = new Line("Northern");
         entityManager.persist(northern);
 
+        final Line overground = new Line("Overground");
+        entityManager.persist(overground);
+
         /* Generate London Bridge station. */
         final Station londonBridge = new Station("London Bridge", zone1);
         londonBridge.getLines().add(jubilee);
@@ -140,6 +143,22 @@ public class PrepareMultiTableDatabaseTest {
         zone1.getStations().add(londonBridge);
         jubilee.getStations().add(londonBridge);
         northern.getStations().add(londonBridge);
+
+        final Station bermondsey = new Station("Bermondsey", zone2);
+        bermondsey.getLines().add(jubilee);
+        entityManager.persist(bermondsey);
+
+        zone2.getStations().add(bermondsey);
+        jubilee.getStations().add(bermondsey);
+
+        final Station canadaWater = new Station("Canada Water", zone2);
+        canadaWater.getLines().add(jubilee);
+        canadaWater.getLines().add(overground);
+        entityManager.persist(canadaWater);
+
+        zone2.getStations().add(canadaWater);
+        jubilee.getStations().add(canadaWater);
+        overground.getStations().add(canadaWater);
 
         transaction.commit();
 
@@ -171,7 +190,7 @@ public class PrepareMultiTableDatabaseTest {
 
         LOG.info("Result:   " + result);
 
-        JsonAssert.with(result).assertThat("$..name", hasItems("London Bridge"));
+        JsonAssert.with(result).assertThat("$..name", hasItems("London Bridge", "Bermondsey", "Canada Water"));
     }
 
 }
