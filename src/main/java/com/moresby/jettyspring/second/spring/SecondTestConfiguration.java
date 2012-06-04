@@ -58,7 +58,7 @@ public class SecondTestConfiguration {
      */
     @Bean
     public EntityManagerFactory entityManagerFactory() {
-        return Persistence.createEntityManagerFactory("default");
+        return Persistence.createEntityManagerFactory("defaultPU");
     }
 
     /**
