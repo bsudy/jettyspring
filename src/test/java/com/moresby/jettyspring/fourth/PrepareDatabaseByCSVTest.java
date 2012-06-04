@@ -59,7 +59,14 @@ import com.moresby.jettyspring.fourth.spring.FourthTestConfiguration;
 import com.moresby.jettyspring.fourth.spring.FourthTestRestController;
 
 /**
- * TODO javadoc.
+ * <p>I'll show in this test how the long database generation code eliminated and moved into CSV.
+ * There are three ways to do it, the first uses a csv parser which can take a csv file and
+ * can create the relating entities. The second uses a built in csv parser like H2 db-s
+ * (<a href="http://www.h2database.com/html/tutorial.html#csv">http://www.h2database.com/html/tutorial.html#csv</a>).
+ * And last but not least (what I never tried) to use a csv based database driver:
+ * <a href="http://csvjdbc.sourceforge.net/">http://csvjdbc.sourceforge.net/</a>.</p>
+ * <p>In this case I'll use the first solution, so I'll write a {@link CsvParser} which can
+ * take a csv file.</p>
  *
  * @author Barnabas Sudy (barnabas.sudy@gmail.com)
  * @since 2012
@@ -68,8 +75,6 @@ public class PrepareDatabaseByCSVTest {
 
     /** Logger. */
     private static final Logger LOG = Logger.getLogger(PrepareDatabaseByCSVTest.class);
-
-    private static EntityManagerFactory emf;
 
     /**
      * Test configuration. This class is overdefining the {@link FourthTestConfiguration}'s original
@@ -92,6 +97,9 @@ public class PrepareDatabaseByCSVTest {
         }
 
     }
+
+    /** The entity manager factory to create the database and then use it in the test. */
+    private static EntityManagerFactory emf;
 
     /** The static variable for the Jetty server. */
     private static Server jettyServer = null;

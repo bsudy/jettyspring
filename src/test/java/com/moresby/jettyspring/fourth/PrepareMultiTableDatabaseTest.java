@@ -74,8 +74,6 @@ public class PrepareMultiTableDatabaseTest {
     /** Logger. */
     private static final Logger LOG = Logger.getLogger(PrepareMultiTableDatabaseTest.class);
 
-    private static EntityManagerFactory emf;
-
     /**
      * Test configuration. This class is overdefining the {@link FourthTestConfiguration}'s original
      * {@link EntityManagerFactory}. Therefore the test will be able to use the a generated memory based
@@ -97,6 +95,9 @@ public class PrepareMultiTableDatabaseTest {
         }
 
     }
+
+    /** The entity manager factory to create the database and then use it in the test. */
+    private static EntityManagerFactory emf;
 
     /** The static variable for the Jetty server. */
     private static Server jettyServer = null;
