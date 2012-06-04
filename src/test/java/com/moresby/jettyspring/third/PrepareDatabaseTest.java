@@ -54,7 +54,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.moresby.jettyspring.JettyRunner;
 import com.moresby.jettyspring.RestTestUtil;
-import com.moresby.jettyspring.first.FirstTest;
 import com.moresby.jettyspring.second.domain.FirstEntity;
 import com.moresby.jettyspring.second.spring.SecondTestConfiguration;
 import com.moresby.jettyspring.second.spring.SecondTestRestController;
@@ -69,7 +68,7 @@ import com.moresby.jettyspring.second.spring.SecondTestRestController;
 public class PrepareDatabaseTest {
 
     /** Logger. */
-    private static final Logger LOG = Logger.getLogger(FirstTest.class);
+    private static final Logger LOG = Logger.getLogger(PrepareDatabaseTest.class);
 
     private static EntityManagerFactory emf;
 
@@ -142,7 +141,7 @@ public class PrepareDatabaseTest {
     }
 
     /**
-     * Stops the Jetty server.
+     * Stops the Jetty server and closes the {@link EntityManagerFactory} if it is still open.
      *
      * @see AfterClass
      */
