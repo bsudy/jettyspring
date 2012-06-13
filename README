@@ -2,6 +2,6 @@ An example project to show how proper Spring MVC integration tests can be writte
 
 For more information visit our blog:
 * Part I is about the configuration - http://moresbycoffee.blogspot.co.uk/2012/06/how-to-test-spring-mvc-with-jetty-and.html
-* Part II is about the database configuration (comming soon)
+* Part II is about the database configuration - http://moresbycoffee.blogspot.co.uk/2012/06/how-to-test-spring-mvc-with-jetty-and_13.html
 * Part III is about the custom database generation (comming soon)
 * Part IV is about the csv based database generation (comming soon)
