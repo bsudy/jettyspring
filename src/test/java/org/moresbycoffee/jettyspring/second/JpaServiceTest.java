@@ -35,6 +35,7 @@ import java.io.IOException;
 import junit.framework.Assert;
 
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.server.Server;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -43,7 +44,6 @@ import org.moresbycoffee.jettyspring.JettyRunner;
 import org.moresbycoffee.jettyspring.RestTestUtil;
 import org.moresbycoffee.jettyspring.first.FirstTest;
 import org.moresbycoffee.jettyspring.second.spring.SecondTestConfiguration;
-import org.mortbay.jetty.Server;
 
 
 /**

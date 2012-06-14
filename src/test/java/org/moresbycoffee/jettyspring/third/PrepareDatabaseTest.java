@@ -41,6 +41,7 @@ import javax.persistence.EntityTransaction;
 import junit.framework.Assert;
 
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.server.Server;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -50,7 +51,6 @@ import org.moresbycoffee.jettyspring.RestTestUtil;
 import org.moresbycoffee.jettyspring.second.domain.FirstEntity;
 import org.moresbycoffee.jettyspring.second.spring.SecondTestConfiguration;
 import org.moresbycoffee.jettyspring.second.spring.SecondTestRestController;
-import org.mortbay.jetty.Server;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;

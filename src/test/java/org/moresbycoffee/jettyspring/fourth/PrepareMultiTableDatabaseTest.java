@@ -39,6 +39,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.server.Server;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -50,7 +51,6 @@ import org.moresbycoffee.jettyspring.fourth.domain.Station;
 import org.moresbycoffee.jettyspring.fourth.domain.Zone;
 import org.moresbycoffee.jettyspring.fourth.spring.FourthTestConfiguration;
 import org.moresbycoffee.jettyspring.fourth.spring.FourthTestRestController;
-import org.mortbay.jetty.Server;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;

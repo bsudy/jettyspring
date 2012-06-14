@@ -30,16 +30,13 @@
  */
 package org.moresbycoffee.jettyspring;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
-import org.mortbay.jetty.Connector;
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.bio.SocketConnector;
-import org.mortbay.jetty.servlet.Context;
-import org.mortbay.jetty.servlet.ServletHolder;
-import org.mortbay.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.bio.SocketConnector;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
  * Utility class to start and stop embedded Jetty server.<br>
@@ -108,7 +105,7 @@ public final class JettyRunner {
             conn.setPort(port);
             jettyServer.setConnectors(new Connector[] {conn });
 
-            final Context context = new Context(jettyServer, contextPath);
+            final ServletContextHandler context = new ServletContextHandler(jettyServer, contextPath);
 
             final ServletHolder servletHolder = new ServletHolder(org.springframework.web.servlet.DispatcherServlet.class);
 
@@ -155,12 +152,9 @@ public final class JettyRunner {
             conn.setPort(port);
             jettyServer.setConnectors(new Connector[] {conn });
 
-            final Context context = new Context(jettyServer, contextPath);
+            final ServletContextHandler context = new ServletContextHandler(jettyServer, contextPath);
 
-            final Map<String, String> initParams = new HashMap<String, String>();
-            initParams.put("contextConfigLocation", rootContextXml);
-
-            context.setInitParams(initParams);
+            context.setInitParameter("contextConfigLocation", rootContextXml);
 
             context.addEventListener(new org.springframework.web.context.ContextLoaderListener());
 
